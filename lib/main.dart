@@ -15,8 +15,7 @@ void main() async {
 
   Flame.images.loadAll(<String>[
     'bg/bg.png',
-    'bg/bg2.png',
-    'bg/backyard.png'
+    'bg/bg2.png'
   ]);
 
   GameLoop gameLoop = GameLoop();

@@ -21,7 +21,7 @@ class GameLoop extends Game {
     aliens = List<Alien>();
     random = Random();
     resize(await Flame.util.initialDimensions());
-    
+
     spawnAlien();
   }
 
@@ -37,7 +37,7 @@ class GameLoop extends Game {
     bgPaint.color = Colors.blueAccent;
     canvas.drawRect(rect, bgPaint);
 
-    aliens.forEach((Alien alien) => alien.render(canvas));    
+    aliens.forEach((Alien alien) => alien.render(canvas));
   }
 
   void resize(Size size) {
@@ -46,8 +46,15 @@ class GameLoop extends Game {
   }
 
   void update(double time) {
-    aliens.forEach((Alien alien) => alien.update(time));
+    // aliens.forEach((Alien alien) => alien.update(time));s
+    aliens.removeWhere((alien) => alien.isDead);
   }
 
-  void onTapDown(TapDownDetails d) {}
+  void onTapDown(TapDownDetails d) {
+    List<Alien>.from(aliens).forEach((alien) {
+      if (alien.alienRect.contains(d.globalPosition)) {
+        alien.onTapDown();
+      }
+    });
+  }
 }
