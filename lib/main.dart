@@ -14,7 +14,7 @@ void main() async {
   await flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   Flame.images.loadAll(<String>[
-    'bg/bg.png',
+    'bg/bg1.png',
     'bg/bg2.png'
   ]);
 
