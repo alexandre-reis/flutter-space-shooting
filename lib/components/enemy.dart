@@ -21,21 +21,16 @@ class Enemy {
   }
 
   void update(double time) {
-    // if (isDead) {
-      enemyRect = (enemyRect.translate(0, gameLoop.tileSize * 5 * time));
-      
-      if (enemyRect.top > gameLoop.screenSize.height) {
-        isOffScreen = true;
-        isDead = !isDead;
+    enemyRect = (enemyRect.translate(0, gameLoop.tileSize * 5 * time));
 
-      }
-
-    // }
+    if (enemyRect.top > gameLoop.screenSize.height) {
+      isOffScreen = true;
+      isDead = !isDead;
+    }
   }
 
-  void onTapDown() {
+  void kill() {
     isDead = !isDead;
-    enemyPaint.color = Colors.purple;
-    // gameLoop.spawnEnemy();
+    enemyPaint.color = Colors.yellow;    
   }
 }
