@@ -15,7 +15,14 @@ void main() async {
 
   Flame.images.loadAll(<String>[
     'bg/bg1.png',
-    'bg/bg2.png'
+    'bg/bg2.png',
+    'bullets/bullet.png',
+    'enemies/spider-enemy-1.png',
+    'enemies/spider-enemy-2.png',
+    'enemies/spider-enemy-3.png',
+    'enemies/nautilus-enemy-1.png',
+    'enemies/nautilus-enemy-2.png',
+    'enemies/nautilus-enemy-3.png'
   ]);
 
   GameLoop gameLoop = GameLoop();

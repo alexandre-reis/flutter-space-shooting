@@ -8,6 +8,8 @@ import 'package:flutter/gestures.dart';
 import 'package:spaceshooting/components/background.dart';
 import 'package:spaceshooting/components/bullet.dart';
 import 'package:spaceshooting/components/enemy.dart';
+import 'package:spaceshooting/components/nautilus-enemy.dart';
+import 'package:spaceshooting/components/spider-enemy.dart';
 import 'package:spaceshooting/controllers/spawner.dart';
 
 class GameLoop extends Game {
@@ -31,19 +33,25 @@ class GameLoop extends Game {
     resize(await Flame.util.initialDimensions());
     background = Background(this);
     spawner = EnemySpawner(this);
-    // fireBullet();
   }
 
   void spawnEnemy() {
-    double x = random.nextDouble() * (screenSize.width - tileSize);
-    double y = random.nextDouble() * (screenSize.height - tileSize);
-    enemies.add(Enemy(this, x, 10));
+    double x = random.nextDouble() * (screenSize.width - tileSize * 2.025);
+    double y = 10 * (screenSize.width - tileSize * 2.025);
+    switch (random.nextInt(2)) {
+      case 0:
+        enemies.add(NautilusEnemy(this, x, 10));
+        break;
+      case 1:
+        enemies.add(SpiderEnemy(this, x, 10));
+        break;
+    }
   }
 
-  void fireBullet() {
-    double x = random.nextDouble() * (screenSize.width - tileSize);
+  void fireBullet(num dx) {
     double y = (screenSize.height - tileSize);
-    bullets.add(Bullet(this, x, y));
+
+    bullets.add(Bullet(this, dx, y));
   }
 
   void render(Canvas canvas) {
@@ -83,6 +91,9 @@ class GameLoop extends Game {
   }
 
   void onTapDown(TapDownDetails d) {
-    fireBullet();
+    print('global');
+    print(d.localPosition);
+    // print(d.globalPosition.dx);ÇL>
+    fireBullet(d.globalPosition.dx);
   }
 }

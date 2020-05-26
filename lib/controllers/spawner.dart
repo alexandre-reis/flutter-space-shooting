@@ -5,10 +5,10 @@ import 'package:spaceshooting/game-loop.dart';
 class EnemySpawner {
   final GameLoop gameLoop;
 
-  final int maxSpawnInterval = 3000;
-  final int minSpawnInterval = 5000;
-  final int intervalChange = 3;
-  final int maxFliesOnScreen = 7;
+  final int maxSpawnInterval = 1000;
+  final int minSpawnInterval = 3000;
+  final int intervalChange = 1;
+  final int maxEnemiesOnScreen = 10;
   int currentInterval;
   int nextSpawn;
 
@@ -30,12 +30,12 @@ class EnemySpawner {
   void update(double t) {
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
-    int livingFlies = 0;
-    // gameLoop.enemies.forEach((Enemy enemy) {
-    //   if (!enemy.isDead) livingFlies += 1;
-    // });
+    int livingEnemies = 0;
+    gameLoop.enemies.forEach((Enemy enemy) {
+      if (!enemy.isDead) livingEnemies += 1;
+    });
 
-    if (nowTimestamp >= nextSpawn && livingFlies < maxFliesOnScreen) {
+    if (nowTimestamp >= nextSpawn && livingEnemies < maxEnemiesOnScreen) {
       gameLoop.spawnEnemy();
       if (currentInterval > minSpawnInterval) {
         currentInterval -= intervalChange;
