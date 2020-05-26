@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:spaceshooting/game-loop.dart';
@@ -7,15 +8,17 @@ import 'package:spaceshooting/game-loop.dart';
 class Bullet {
   Rect bulletRect;
   Sprite deadSprite;
+  final double width = 15;
+  final double height = 15;
 
   final GameLoop gameLoop;
   bool isOffScreen = false;
   bool toDestroy = false;
 
   Bullet(this.gameLoop, double x, double y){
-    print(x);
-    print(y);
-    bulletRect = Rect.fromLTWH(x, y, 15, 15);
+
+    Flame.audio.play('sfx/fire-bullet.mp3');    
+    bulletRect = Rect.fromLTWH(x-(width/2), y, width, height);
     deadSprite = Sprite('bullets/bullet.png');
 
   }

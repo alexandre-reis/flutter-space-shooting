@@ -5,6 +5,9 @@ import 'package:spaceshooting/components/enemy.dart';
 import 'package:spaceshooting/game-loop.dart';
 
 class NautilusEnemy extends Enemy {
+
+  int get pointsPerKill => 25;
+  
   NautilusEnemy(GameLoop gameLoop, double x, double y) : super(gameLoop) {
     walkingSprite = List<Sprite>();
     walkingSprite.add(Sprite('enemies/nautilus-enemy-1.png'));
@@ -14,4 +17,5 @@ class NautilusEnemy extends Enemy {
     enemyRect = Rect.fromLTWH(x, y, gameLoop.tileSize * 1.65, gameLoop.tileSize * 1.65);
 
   }
+  
 }

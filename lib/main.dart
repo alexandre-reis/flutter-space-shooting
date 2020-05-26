@@ -25,6 +25,13 @@ void main() async {
     'enemies/nautilus-enemy-3.png'
   ]);
 
+  Flame.audio.disableLog();
+  Flame.audio.loadAll(<String>[
+    'sfx/explosion.mp3',
+    'sfx/fire-bullet.mp3',
+  ]);
+
+
   GameLoop gameLoop = GameLoop();
   TapGestureRecognizer tapper = TapGestureRecognizer();
   tapper.onTapDown = gameLoop.onTapDown;

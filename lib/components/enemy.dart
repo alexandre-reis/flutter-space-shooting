@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:spaceshooting/game-loop.dart';
@@ -13,23 +14,28 @@ class Enemy {
   bool isOffScreen = false;
   Offset targetLocation;
   double get speed => gameLoop.tileSize * 6;
+  int get pointsPerKill => 15;
+  int hitsToKill = 4;
 
   Enemy(this.gameLoop) {
     setTargetLocation();
   }
 
   void setTargetLocation() {
-    double x = gameLoop.random.nextDouble() * (gameLoop.screenSize.width - (gameLoop.tileSize * 2.025));
-    double y = gameLoop.random.nextDouble() * (gameLoop.screenSize.height - (gameLoop.tileSize * 2.025));
+    double x = gameLoop.random.nextDouble() *
+        (gameLoop.screenSize.width - (gameLoop.tileSize * 2.025));
+    double y = gameLoop.random.nextDouble() *
+        (gameLoop.screenSize.height - (gameLoop.tileSize * 2.025));
     targetLocation = Offset(x, y);
   }
 
   void render(Canvas canvas) {
-    walkingSprite[walkingSpriteIndex.toInt()].renderRect(canvas, enemyRect.inflate(2));
+    walkingSprite[walkingSpriteIndex.toInt()]
+        .renderRect(canvas, enemyRect.inflate(2));
   }
 
   void update(double time) {
-    // enemyRect = (enemyRect.translate(0, gameLoop.tileSize * 6 * time));
+    enemyRect = (enemyRect.translate(0, gameLoop.tileSize * 6 * time));
 
     if (enemyRect.top > gameLoop.screenSize.height) {
       isOffScreen = true;
@@ -41,18 +47,24 @@ class Enemy {
       walkingSpriteIndex -= walkingSpriteIndex.toInt();
     }
 
-    double stepDistance = speed * time;
-    Offset toTarget = targetLocation - Offset(enemyRect.left, enemyRect.top);
-    if (stepDistance < toTarget.distance) {
-      Offset stepToTarget = Offset.fromDirection(toTarget.direction, stepDistance);
-      enemyRect = enemyRect.shift(stepToTarget);
-    } else {
-      enemyRect = enemyRect.shift(toTarget);
-      setTargetLocation();
-    }
+    // double stepDistance = speed * time;
+    // Offset toTarget = targetLocation - Offset(enemyRect.left, enemyRect.top);
+    // if (stepDistance < toTarget.distance) {
+    //   Offset stepToTarget =
+    //       Offset.fromDirection(toTarget.direction, stepDistance);
+    //   enemyRect = enemyRect.shift(stepToTarget);
+    // } else {
+    //   enemyRect = enemyRect.shift(toTarget);
+    //   setTargetLocation();
+    // }
   }
 
   void kill() {
-    isDead = !isDead;
+    hitsToKill -= 1;    
+    if(hitsToKill == 0 ){
+      isDead = !isDead;
+      gameLoop.score += pointsPerKill;
+      Flame.audio.play('sfx/explosion.mp3');
+    }
   }
 }

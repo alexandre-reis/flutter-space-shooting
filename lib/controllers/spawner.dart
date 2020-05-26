@@ -18,13 +18,8 @@ class EnemySpawner {
   }
 
   void start() {
-    killAll();
     currentInterval = maxSpawnInterval;
     nextSpawn = DateTime.now().millisecondsSinceEpoch + currentInterval;
-  }
-
-  void killAll() {
-    gameLoop.enemies.forEach((Enemy enemy) => enemy.isDead = true);
   }
 
   void update(double t) {

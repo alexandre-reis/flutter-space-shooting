@@ -9,6 +9,7 @@ import 'package:spaceshooting/components/background.dart';
 import 'package:spaceshooting/components/bullet.dart';
 import 'package:spaceshooting/components/enemy.dart';
 import 'package:spaceshooting/components/nautilus-enemy.dart';
+import 'package:spaceshooting/components/score-display.dart';
 import 'package:spaceshooting/components/spider-enemy.dart';
 import 'package:spaceshooting/controllers/spawner.dart';
 
@@ -19,19 +20,24 @@ class GameLoop extends Game {
   List<Bullet> bullets;
   Random random;
   Background background;
-
+  ScoreDisplay scoreDisplay;
   EnemySpawner spawner;
+
+
+  int score;
 
   GameLoop() {
     initialize();
   }
 
   void initialize() async {
+    score = 0;
     enemies = List<Enemy>();
     bullets = List<Bullet>();
     random = Random();
     resize(await Flame.util.initialDimensions());
     background = Background(this);
+    scoreDisplay = ScoreDisplay(this);
     spawner = EnemySpawner(this);
   }
 
@@ -58,6 +64,7 @@ class GameLoop extends Game {
     background.render(canvas);
     enemies.forEach((Enemy alien) => alien.render(canvas));
     bullets.forEach((Bullet bullet) => bullet.render(canvas));
+    scoreDisplay.render(canvas);
   }
 
   void resize(Size size) {
@@ -75,10 +82,11 @@ class GameLoop extends Game {
       List<Bullet>.from(bullets).forEach((bullet) {
         if (checkColision(enemy.enemyRect, bullet.bulletRect)) {
           enemy.kill();
-          bullet.destroy();
+          bullet.destroy();          
         }
       });
     });
+    scoreDisplay.update(time);
   }
 
   bool checkColision(Rect enemyRect, Rect bulletRect) {
